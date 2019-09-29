@@ -48,11 +48,10 @@
         </tr>
       </thead>
       <tbody>
-        {% for item in info['data'] %} {% if loop.index == 1 %}
+        {% for item in info['data'] %} {% if loop.index % 2 == 1 %}
         <tr class="bg-success">
           {% else %}
         </tr>
-
         <tr>
           {% endif %}
           <td>
