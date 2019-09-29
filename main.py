@@ -63,6 +63,5 @@ def info():
         return Response(status=404)
     return render_template('list.html', info = store)
 
-
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
