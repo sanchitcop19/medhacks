@@ -60,7 +60,7 @@
           <td>{{ item["age"] }}</td>
           <td>{{ item["sex"] }}</td>
           <td>{{ item["bp"] }}</td>
-          <td>{{ item["medication"] }}</td>
+          <td>{{ item["medications"] }}</td>
           <td>{{ item["location"] }}</td>
         </tr>
         {% endfor %}
@@ -73,21 +73,25 @@
             var cali = { lat: 36.7783, lng: -119.4179 };
             // The map, centered at Cali
             var map = new google.maps.Map(document.getElementById("map"), {
-              zoom: 6,
+              zoom: 4,
               center: cali
             });
             var data={{ info|safe }};
-            var keys=Object.keys(data);
+            var keys=Object.keys(data['data']);
+            console.log(keys);
             keys.forEach(function(key){
-              var coordinate= {lat:36.7783,lng:-119.4179};
-              var score=21;
-              if(score<=20){
+              var coordinate= {lat:data['data'][key]['latitude'],lng:data['data'][key]['longitude']};
+              console.log(coordinate);
+              var bp=data['data'][key]['bp'].split('/');
+              var dia = parseFloat(bp[1]);
+              var sys = parseFloat(bp[0]);
+              if(dia > 120.0 || sys > 220.0){
                 var ico={
-                  url:"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+                  url:"http://maps.google.com/mapfiles/ms/icons/red-dot.png"
                 };
               }else{
                 var ico={
-                  url:"http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+                  url:"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
                 };
               }
               var marker= new google.maps.Marker({
